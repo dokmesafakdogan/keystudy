@@ -1,78 +1,43 @@
 import 'package:flutter/material.dart';
-import 'package:proje/screens/watches_screen.dart';
-
-
-var kColorScheme = ColorScheme.fromSeed(
-  seedColor:const Color.fromARGB(255, 192, 213, 244),
-  
-
-);
-var kDarkColorScheme = ColorScheme.fromSeed(
-  brightness: Brightness.dark,
-  seedColor:const Color(0xFF002359),
-  onPrimary: const Color(0xFF02327D)
-   );
+import 'package:proje/screens/login_screen.dart';
+import 'package:proje/theme/theme_constants.dart';
+import 'package:proje/provider/theme_provider.dart';
+import 'package:provider/provider.dart';
 
 
 
 void main() {
-  
- 
-  runApp(const  MainApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ThemeProvider(),
+      child: const MainApp(),
+    ),
+  );
 }
 
+
+ThemeProvider themeProvider = ThemeProvider();
+
+
 class MainApp extends StatelessWidget {
-  const MainApp({super.key,});
-
- 
-
+  const MainApp({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    
-    return       MaterialApp(
-      debugShowCheckedModeBanner: false,
-      
-      darkTheme: ThemeData.dark().copyWith(
-       
-        colorScheme: kDarkColorScheme,
-        
-       
+    ThemeProvider themeProvider = Provider.of<ThemeProvider>(context);
+     
+        return MaterialApp(
+         
+          debugShowCheckedModeBanner: false,
+          theme: lightTheme,
+          darkTheme: darkTheme,
           
-      ),
-      theme: ThemeData().copyWith(
-        
-        colorScheme: kColorScheme,
-        appBarTheme: const AppBarTheme().copyWith(
-          backgroundColor: kColorScheme.onPrimaryContainer,
-          foregroundColor: kColorScheme.primaryContainer,
-        ),
-       
-       
-       
-        textTheme: ThemeData().textTheme.copyWith(
-              titleLarge: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: kColorScheme.onSecondaryContainer,
-                fontSize: 16,
-              ),
-            ),),
-      title: 'World Clock',
-       home:const WatchesScreen()
-       
-       //FutureBuilder<List<WorldTime>>(
-        
-      //   builder: (context, snapshot) {
-      //     if(snapshot.connectionState == ConnectionState.waiting){
-      //       return const WatchesScreen();
-      //     }
-      //     if(snapshot.hasData){
-      //       return const WatchesScreen();
-      //     }
-      //     return const WatchesScreen();
-      //   },   
-      // ),
-      
+          title: 'World Clock',
+          home: const LoginScreen(),
+          themeMode: themeProvider.themeMode
         );
+      }
+    
   }
-}
